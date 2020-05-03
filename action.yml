@@ -1,0 +1,16 @@
+name: 'Setup Cloudfoundry CLI'
+description: 'Set up a specific version of the Cloudfoundry CLI and add the
+   command-line tools to the PATH'
+author: 'jvalkeal'
+inputs:
+  version:
+    description: 'The CLI version to make available on the path.'
+    required: false
+    default: ''
+  architecture:
+    description: 'The architecture (linux64, macosx64, windows64) of the package.'
+    required: false
+    default: 'linux64'
+runs:
+  using: 'node12'
+  main: 'dist/index.js'
