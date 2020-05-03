@@ -4,6 +4,9 @@
   <a href="https://github.com/jvalkeal/setup-cf-cli-action"><img alt="GitHub Actions status" src="https://github.com/jvalkeal/setup-cf-cli-action/workflows/Main%20workflow/badge.svg"></a>
 </p>
 
+Simple GitHub Actions to install and setup a [Cloudfoundry CLI](https://github.com/cloudfoundry/cli)
+to get used with action workflows.
+
 # Usage
 
 See [action.yml](action.yml)
@@ -40,6 +43,15 @@ steps:
     CF_USERNAME: ${{ secrets.CF_USERNAME }}
     CF_PASSWORD: ${{ secrets.CF_PASSWORD }}
 ```
+
+# Versions
+
+Versions are released as a git tags. We're currenly on a pre-release stage so
+current _0.x_ series can be found under tag _v0_ which will always be a same
+as latest within _0.x_ like _v0.0.1_.
+
+**NOTE:** While not recommended you can also use _master_ as a version which
+would always have latest development version.
 
 # License
 
