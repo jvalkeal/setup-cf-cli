@@ -70,6 +70,4 @@ describe('cli installer tests', () => {
     }
     expect(thrown).toBe(true);
   }, 100000);
-
-
 });
