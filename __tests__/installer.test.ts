@@ -18,16 +18,16 @@ if (process.platform === 'win32') {
   cliUrl =
     'https://packages.cloudfoundry.org/stable?release=windows64-exe&source=github';
 } else if (process.platform === 'darwin') {
-  cliFilePath = path.join(cliDir, 'cli_mac.tar.gz');
+  cliFilePath = path.join(cliDir, 'cli_mac.tgz');
   cliUrl =
     'https://packages.cloudfoundry.org/stable?release=macosx64-binary&source=github';
 } else {
-  cliFilePath = path.join(cliDir, 'cli_linux.tar.gz');
+  cliFilePath = path.join(cliDir, 'cli_linux.tgz');
   cliUrl =
     'https://packages.cloudfoundry.org/stable?release=linux64-binary&source=github';
 }
 
-describe('maven installer tests', () => {
+describe('cli installer tests', () => {
   beforeAll(async () => {
     await io.rmRF(toolDir);
     await io.rmRF(tempDir);
@@ -53,11 +53,23 @@ describe('maven installer tests', () => {
     }
   }, 100000);
 
-  it('Downloads latest cli without version given', async () => {
-    await installer.getCli('6.51.0', 'linux64');
-    const cliDir = path.join(toolDir, 'cloudfoundry-cli', '6.51.0', 'x64');
+  it('Downloads cli without version given', async () => {
+    await installer.getCli('6.50.0', 'linux64');
+    const cliDir = path.join(toolDir, 'cloudfoundry-cli', '6.50.0', 'x64');
 
     expect(fs.existsSync(`${cliDir}.complete`)).toBe(true);
     expect(fs.existsSync(path.join(cliDir, 'cf'))).toBe(true);
   }, 100000);
+
+  it('Throws if missing version', async () => {
+    let thrown = false;
+    try {
+      await installer.getCli('', 'linux64');
+    } catch {
+      thrown = true;
+    }
+    expect(thrown).toBe(true);
+  }, 100000);
+
+
 });

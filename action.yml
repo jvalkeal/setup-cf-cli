@@ -5,8 +5,7 @@ author: 'jvalkeal'
 inputs:
   version:
     description: 'The CLI version to make available on the path.'
-    required: false
-    default: ''
+    required: true
   architecture:
     description: 'The architecture (linux64, macosx64, windows64) of the package.'
     required: false

@@ -134,20 +134,10 @@ function getDownloadInfo(
   arch: string,
   server: string
 ): {version: string; url: string} {
-  // https://packages.cloudfoundry.org/stable?release=windows64-exe&source=github
-  // https://packages.cloudfoundry.org/stable?release=macosx64-binary&source=github
-  // https://packages.cloudfoundry.org/stable?release=linux64-binary&source=github
-
-  // https://packages.cloudfoundry.org/stable?release=linux64-binary&version=6.51.0&source=github-rel
-  // https://packages.cloudfoundry.org/stable?release=linux32-binary&version=6.51.0&source=github-rel
-  // https://packages.cloudfoundry.org/stable?release=macosx64-binary&version=6.51.0&source=github-rel
-  // https://packages.cloudfoundry.org/stable?release=windows64-exe&version=6.51.0&source=github-rel
-  // https://packages.cloudfoundry.org/stable?release=windows32-exe&version=6.51.0&source=github-rel
-
-  const release = arch === 'windows64' ? '-exe' : '-binary';
-  let curUrl = `https://${server}/stable?source=github&release=${arch}${release}`;
-  if (version) {
-    curUrl = curUrl + `&version=${version}`;
+  if (!version || version.length === 0) {
+    throw new Error('Cli version missing');
   }
+  const release = arch === 'windows64' ? '-exe' : '-binary';
+  let curUrl = `https://${server}/stable?source=github-actions&release=${arch}${release}&version=${version}`;
   return {version: version, url: curUrl};
 }
