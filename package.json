@@ -5,7 +5,7 @@
   "description": "setup cloudfoundry cli action",
   "main": "dist/index.js",
   "scripts": {
-    "build": "ncc build src/setup-java.ts",
+    "build": "ncc build src/setup-cli.ts",
     "format": "prettier --write **/*.ts",
     "format-check": "prettier --check **/*.ts",
     "prerelease": "npm run-script build",
