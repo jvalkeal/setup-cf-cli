@@ -53,7 +53,7 @@ describe('cli installer tests', () => {
     }
   }, 100000);
 
-  it('Downloads cli without version given', async () => {
+  it('Downloads cli with version given', async () => {
     await installer.getCli('6.50.0', 'linux64');
     const cliDir = path.join(toolDir, 'cloudfoundry-cli', '6.50.0', 'x64');
 
