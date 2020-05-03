@@ -60,6 +60,4 @@ describe('maven installer tests', () => {
     expect(fs.existsSync(`${cliDir}.complete`)).toBe(true);
     expect(fs.existsSync(path.join(cliDir, 'cf'))).toBe(true);
   }, 100000);
-
-
 });

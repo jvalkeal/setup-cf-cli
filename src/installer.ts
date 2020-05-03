@@ -26,10 +26,7 @@ if (!tempDirectory) {
   tempDirectory = path.join(baseLocation, 'actions', 'temp');
 }
 
-export async function getCli(
-  version: string,
-  arch: string
-): Promise<void> {
+export async function getCli(version: string, arch: string): Promise<void> {
   const toolName = 'cloudfoundry-cli';
   let toolPath = tc.find(toolName, version);
 
@@ -38,7 +35,11 @@ export async function getCli(
   } else {
     core.debug('Downloading CLI from packages.cloudfoundry.org');
 
-    const downloadInfo = getDownloadInfo(version, arch, 'packages.cloudfoundry.org');
+    const downloadInfo = getDownloadInfo(
+      version,
+      arch,
+      'packages.cloudfoundry.org'
+    );
     core.debug(`DownloadInfo ${downloadInfo.version} ${downloadInfo.url}`);
 
     const cliFile = await tc.downloadTool(downloadInfo.url);
@@ -63,7 +64,6 @@ export async function getCli(
       toolName,
       getCacheVersionString(cliVersion)
     );
-
   }
   core.addPath(toolPath);
 }
@@ -107,9 +107,7 @@ async function extractFiles(
   } else if ('.zip' === fileEnding) {
     await tc.extractZip(file, destinationFolder);
   } else {
-    throw new Error(
-      `Failed to extract ${file} - only .zip or .tgz supported`
-    );
+    throw new Error(`Failed to extract ${file} - only .zip or .tgz supported`);
   }
 }
 
@@ -118,7 +116,6 @@ async function unzipCliDownload(
   fileEnding: string,
   destinationFolder: string
 ): Promise<string> {
-  core.debug(`xxx1`);
   // Create the destination folder if it doesn't exist
   await io.mkdirP(destinationFolder);
 
@@ -147,7 +144,7 @@ function getDownloadInfo(
   // https://packages.cloudfoundry.org/stable?release=windows64-exe&version=6.51.0&source=github-rel
   // https://packages.cloudfoundry.org/stable?release=windows32-exe&version=6.51.0&source=github-rel
 
-  const release = arch === 'windows64' ? '-exe': '-binary';
+  const release = arch === 'windows64' ? '-exe' : '-binary';
   let curUrl = `https://${server}/stable?source=github&release=${arch}${release}`;
   if (version) {
     curUrl = curUrl + `&version=${version}`;
