@@ -1,7 +1,7 @@
 # setup-cf-cli-action
 
 <p align="left">
-  <a href="https://github.com/jvalkeal/setup-cf-cli-action"><img alt="GitHub Actions status" src="https://github.com/jvalkeal/setup-cf-cli-action/workflows/Main%20workflow/badge.svg"></a>
+  <a href="https://github.com/jvalkeal/setup-cf-cli"><img alt="GitHub Actions status" src="https://github.com/jvalkeal/setup-cf-cli/workflows/Main%20workflow/badge.svg"></a>
 </p>
 
 Simple GitHub Actions to install and setup a [Cloudfoundry CLI](https://github.com/cloudfoundry/cli)
@@ -15,7 +15,7 @@ See [action.yml](action.yml)
 ```yaml
 steps:
 - uses: actions/checkout@v2
-- uses: jvalkeal/setup-cf-cli-action@v0
+- uses: jvalkeal/setup-cf-cli@v0
   with:
     version: 6.51.0 # The CLI version to make available on the path.
     architecture: linux64 # (linux64, macosx64, windows64) - defaults to linux64
@@ -31,7 +31,7 @@ secrets are exposed to publicly visible logs.
 ```yaml
 steps:
 - name: Set up CF CLI
-  uses: jvalkeal/setup-cf-cli-action@v0
+  uses: jvalkeal/setup-cf-cli@v0
   with:
     version: 6.51.0
 - name: CF Login
