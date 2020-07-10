@@ -1,12 +1,20 @@
 name: Main workflow
-on: [push, pull_request]
+
+on:
+  push:
+    branches:
+      - master
+  pull_requests:
+    branches:
+      - master
+
 jobs:
   run:
     name: Run
     runs-on: ${{ matrix.operating-system }}
     strategy:
       matrix:
-        operating-system: [ubuntu-latest, windows-latest]
+        operating-system: [ubuntu-latest, windows-latest, macos-latest]
     steps:
     - name: Checkout
       uses: actions/checkout@master
