@@ -2,12 +2,9 @@ let tempDirectory = process.env['RUNNER_TEMP'] || '';
 
 import * as core from '@actions/core';
 import * as io from '@actions/io';
-import * as exec from '@actions/exec';
-import * as httpm from '@actions/http-client';
 import * as tc from '@actions/tool-cache';
 import * as fs from 'fs';
 import * as path from 'path';
-import * as semver from 'semver';
 
 const IS_WINDOWS = process.platform === 'win32';
 
@@ -26,9 +23,20 @@ if (!tempDirectory) {
   tempDirectory = path.join(baseLocation, 'actions', 'temp');
 }
 
-export async function getCli(version: string, arch: string): Promise<void> {
+export async function getCli(version: string): Promise<void> {
+  let arch: string;
   const toolName = 'cloudfoundry-cli';
   let toolPath = tc.find(toolName, version);
+
+  if (IS_WINDOWS) {
+    arch = 'windows64';
+  } else {
+    if (process.platform === 'darwin') {
+      arch = 'macosx64';
+    } else {
+      arch = 'linux64';
+    }
+  }
 
   if (toolPath) {
     core.debug(`Tool found in cache ${toolPath}`);

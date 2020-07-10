@@ -6,6 +6,7 @@ import child_process = require('child_process');
 const toolDir = path.join(__dirname, 'runner', 'tools');
 const tempDir = path.join(__dirname, 'runner', 'temp');
 const cliDir = path.join(__dirname, 'runner', 'cli');
+const IS_WINDOWS = process.platform === 'win32';
 
 process.env['RUNNER_TOOL_CACHE'] = toolDir;
 process.env['RUNNER_TEMP'] = tempDir;
@@ -54,17 +55,21 @@ describe('cli installer tests', () => {
   }, 100000);
 
   it('Downloads cli with version given', async () => {
-    await installer.getCli('6.50.0', 'linux64');
+    await installer.getCli('6.50.0');
     const cliDir = path.join(toolDir, 'cloudfoundry-cli', '6.50.0', 'x64');
 
     expect(fs.existsSync(`${cliDir}.complete`)).toBe(true);
-    expect(fs.existsSync(path.join(cliDir, 'cf'))).toBe(true);
+    if (IS_WINDOWS) {
+      expect(fs.existsSync(path.join(cliDir, 'cf.exe'))).toBe(true);
+    } else {
+      expect(fs.existsSync(path.join(cliDir, 'cf'))).toBe(true);
+    }
   }, 100000);
 
   it('Throws if missing version', async () => {
     let thrown = false;
     try {
-      await installer.getCli('', 'linux64');
+      await installer.getCli('');
     } catch {
       thrown = true;
     }

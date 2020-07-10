@@ -18,7 +18,6 @@ steps:
 - uses: jvalkeal/setup-cf-cli@v0
   with:
     version: 6.51.0 # The CLI version to make available on the path.
-    architecture: linux64 # (linux64, macosx64, windows64) - defaults to linux64
 ```
 
 ## Login

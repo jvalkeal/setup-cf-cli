@@ -4,8 +4,7 @@ import * as installer from './installer';
 async function run() {
   try {
     let version = core.getInput('version', {required: true});
-    const arch = core.getInput('architecture', {required: true});
-    await installer.getCli(version, arch);
+    await installer.getCli(version);
   } catch (error) {
     core.setFailed(error.message);
   }
