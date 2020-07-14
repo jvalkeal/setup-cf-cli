@@ -2987,8 +2987,7 @@ function run() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
             let version = core.getInput('version', { required: true });
-            const arch = core.getInput('architecture', { required: true });
-            yield installer.getCli(version, arch);
+            yield installer.getCli(version);
         }
         catch (error) {
             core.setFailed(error.message);
@@ -4564,10 +4563,22 @@ if (!tempDirectory) {
     }
     tempDirectory = path.join(baseLocation, 'actions', 'temp');
 }
-function getCli(version, arch) {
+function getCli(version) {
     return __awaiter(this, void 0, void 0, function* () {
+        let arch;
         const toolName = 'cloudfoundry-cli';
         let toolPath = tc.find(toolName, version);
+        if (IS_WINDOWS) {
+            arch = 'windows64';
+        }
+        else {
+            if (process.platform === 'darwin') {
+                arch = 'macosx64';
+            }
+            else {
+                arch = 'linux64';
+            }
+        }
         if (toolPath) {
             core.debug(`Tool found in cache ${toolPath}`);
         }
