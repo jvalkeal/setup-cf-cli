@@ -1,10 +1,10 @@
-# setup-cf-cli-action
+# setup-cf-cli
 
 <p align="left">
   <a href="https://github.com/jvalkeal/setup-cf-cli"><img alt="GitHub Actions status" src="https://github.com/jvalkeal/setup-cf-cli/workflows/Main%20workflow/badge.svg"></a>
 </p>
 
-Simple GitHub Actions to install and setup a [Cloudfoundry CLI](https://github.com/cloudfoundry/cli)
+GitHub Action to install and setup a [Cloudfoundry CLI](https://github.com/cloudfoundry/cli)
 to get used with action workflows.
 
 # Usage
@@ -50,7 +50,8 @@ current _0.x_ series can be found under tag _v0_ which will always be a same
 as latest within _0.x_ like _v0.0.1_.
 
 **NOTE:** While not recommended you can also use _master_ as a version which
-would always have latest development version.
+would always have latest development version. Just remember that _master_
+may not be stable.
 
 # License
 
