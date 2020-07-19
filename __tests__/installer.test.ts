@@ -28,7 +28,7 @@ if (process.platform === 'win32') {
     'https://packages.cloudfoundry.org/stable?release=linux64-binary&source=github';
 }
 
-xdescribe('cli installer tests', () => {
+describe('cli installer tests', () => {
   beforeAll(async () => {
     await io.rmRF(toolDir);
     await io.rmRF(tempDir);
