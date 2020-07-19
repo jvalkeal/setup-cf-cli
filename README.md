@@ -21,11 +21,47 @@ steps:
 ```
 
 ## Login
-There's no embedded functionality to manage anything else than just
-setting up CLI into a path. For commands to do anything usefull you
-need to store environment settings in a GitHub secrets and
-then run login command. GitHub will then make sure that none of these
-secrets are exposed to publicly visible logs.
+
+**NOTE**
+Not yet release, available only from _main_.
+
+You need to store environment settings in a GitHub secrets,
+GitHub will then make sure that none of these secrets are exposed
+to publicly visible logs.
+
+There's an embedded functionality to run login command which is disabled
+on default. It's expected that _api_, _org_, _space_, _username_ and
+_password_ are available as an environment variable. Below config
+should default values.
+
+```yaml
+steps:
+- name: Set up CF CLI
+  uses: jvalkeal/setup-cf-cli@v0
+  with:
+    version: 6.51.0
+    login: false
+    login-api: CF_API
+    login-org: CF_ORG
+    login-space: CF_SPACE
+    login-username: CF_USERNAME
+    login-password: CF_PASSWORD
+```
+
+By just setting _login_ to _true_ would work nicely if env variables are
+mapped from secrects like this:
+
+```yaml
+env:
+  CF_API: ${{ secrets.CF_API }}
+  CF_ORG: ${{ secrets.CF_ORG }}
+  CF_SPACE: ${{ secrets.CF_SPACE }}
+  CF_USERNAME: ${{ secrets.CF_USERNAME }}
+  CF_PASSWORD: ${{ secrets.CF_PASSWORD }}
+```
+
+If a way actions does a login is not suitable, you can always do it
+manually by doing something like:
 
 ```yaml
 steps:
@@ -43,14 +79,19 @@ steps:
     CF_PASSWORD: ${{ secrets.CF_PASSWORD }}
 ```
 
+
 ## Plugins
+
+**NOTE**
+Not yet release, available only from _main_.
+
 It's possible to install plugins by defining its existense with a plugin repository.
 If you only need to install one plugin, use `plugin-repo` and `plugin-id`, otherwise
 if a need for multiple repos and plugins, define `plugins` which takes a json format.
 
 ```yaml
 steps:
-- uses: jvalkeal/setup-cf-cli@v0
+- uses: jvalkeal/setup-cf-cli@main
   with:
     plugins: |
       [

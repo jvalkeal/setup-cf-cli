@@ -2984,6 +2984,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const core = __importStar(__webpack_require__(470));
 const installer = __importStar(__webpack_require__(923));
 const setup_plugins_1 = __webpack_require__(509);
+const login_1 = __webpack_require__(554);
 function run() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
@@ -2993,6 +2994,15 @@ function run() {
             const pluginRepo = core.getInput('plugin-repo', { required: false });
             const pluginId = core.getInput('plugin-id', { required: false });
             yield setup_plugins_1.setupPlugins(plugins, pluginRepo, pluginId);
+            const doLogin = core.getInput('login', { required: false }) === 'true';
+            if (doLogin) {
+                const apiEnv = core.getInput('login-api', { required: false }) || 'CF_API';
+                const orgEnv = core.getInput('login-org', { required: false }) || 'CF_ORG';
+                const spaceEnv = core.getInput('login-space', { required: false }) || 'CF_SPACE';
+                const usernameEnv = core.getInput('login-username', { required: false }) || 'CF_USERNAME';
+                const passwordEnv = core.getInput('login-password', { required: false }) || 'CF_PASSWORD';
+                yield login_1.login(apiEnv, orgEnv, spaceEnv, usernameEnv, passwordEnv);
+            }
         }
         catch (error) {
             core.setFailed(error.message);
@@ -4256,6 +4266,95 @@ class HttpClient {
     }
 }
 exports.HttpClient = HttpClient;
+
+
+/***/ }),
+
+/***/ 554:
+/***/ (function(__unusedmodule, exports, __webpack_require__) {
+
+"use strict";
+
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (Object.hasOwnProperty.call(mod, k)) result[k] = mod[k];
+    result["default"] = mod;
+    return result;
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const core = __importStar(__webpack_require__(470));
+const exec_1 = __webpack_require__(986);
+function login(apiEnv, orgEnv, spaceEnv, usernameEnv, passwordEnv) {
+    return __awaiter(this, void 0, void 0, function* () {
+        let api = '';
+        let org = '';
+        let space = '';
+        let username = '';
+        let password = '';
+        if (process.env[apiEnv]) {
+            api = process.env[apiEnv] || '';
+        }
+        else {
+            throw new Error(`Env ${apiEnv} not found and needed for cf login`);
+        }
+        if (process.env[orgEnv]) {
+            org = process.env[orgEnv] || '';
+        }
+        else {
+            throw new Error(`Env ${orgEnv} not found and needed for cf login`);
+        }
+        if (process.env[spaceEnv]) {
+            space = process.env[spaceEnv] || '';
+        }
+        else {
+            throw new Error(`Env ${spaceEnv} not found and needed for cf login`);
+        }
+        if (process.env[usernameEnv]) {
+            username = process.env[usernameEnv] || '';
+        }
+        else {
+            throw new Error(`Env ${usernameEnv} not found and needed for cf login`);
+        }
+        if (process.env[passwordEnv]) {
+            password = process.env[passwordEnv] || '';
+        }
+        else {
+            throw new Error(`Env ${passwordEnv} not found and needed for cf login`);
+        }
+        yield runCli('cf', [
+            'login',
+            '-a',
+            api,
+            '-u',
+            username,
+            '-o',
+            org,
+            '-s',
+            space,
+            '-p',
+            password
+        ]);
+    });
+}
+exports.login = login;
+function runCli(cliPath, args) {
+    return __awaiter(this, void 0, void 0, function* () {
+        let res = yield exec_1.exec(cliPath, args);
+        if (res !== core.ExitCode.Success) {
+            throw new Error('CF CLI exited with exit code ' + res);
+        }
+    });
+}
 
 
 /***/ }),
