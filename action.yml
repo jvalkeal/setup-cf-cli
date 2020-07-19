@@ -6,6 +6,15 @@ inputs:
   version:
     description: 'The CLI version to make available on the path.'
     required: true
+  plugins:
+    description: 'The plugins definition as json'
+    required: false
+  plugin-repo:
+    description: 'The plugin repo'
+    required: false
+  plugin-id:
+    description: 'The plugin id'
+    required: false
 runs:
   using: 'node12'
   main: 'dist/index.js'

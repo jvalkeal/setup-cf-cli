@@ -43,6 +43,23 @@ steps:
     CF_PASSWORD: ${{ secrets.CF_PASSWORD }}
 ```
 
+## Plugins
+It's possible to install plugins by defining its existense with a plugin repository.
+If you only need to install one plugin, use `plugin-repo` and `plugin-id`, otherwise
+if a need for multiple repos and plugins, define `plugins` which takes a json format.
+
+```yaml
+steps:
+- uses: jvalkeal/setup-cf-cli@v0
+  with:
+    plugins: |
+      [
+        {repo:"https://plugins.cloudfoundry.org", id:"blue-green-deploy"}
+      ]
+    plugin-repo: https://plugins.cloudfoundry.org
+    plugin-id: blue-green-deploy
+```
+
 # Versions
 
 Versions are released as a git tags. We're currenly on a pre-release stage so
