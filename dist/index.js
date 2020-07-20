@@ -3250,10 +3250,10 @@ const exec_1 = __webpack_require__(986);
 function setupPlugins(pluginsJson, repo, id) {
     return __awaiter(this, void 0, void 0, function* () {
         const config = parse(pluginsJson, repo, id);
-        config.plugins.forEach((plugin) => __awaiter(this, void 0, void 0, function* () {
+        for (const plugin of config.plugins) {
             yield runCli('cf', ['add-plugin-repo', plugin.repo, plugin.repo]);
             yield runCli('cf', ['install-plugin', '-r', plugin.repo, plugin.id, '-f']);
-        }));
+        }
     });
 }
 exports.setupPlugins = setupPlugins;

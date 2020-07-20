@@ -7,10 +7,10 @@ export async function setupPlugins(
   id: string
 ): Promise<void> {
   const config = parse(pluginsJson, repo, id);
-  config.plugins.forEach(async plugin => {
+  for (const plugin of config.plugins) {
     await runCli('cf', ['add-plugin-repo', plugin.repo, plugin.repo]);
     await runCli('cf', ['install-plugin', '-r', plugin.repo, plugin.id, '-f']);
-  });
+  }
 }
 
 export function parse(
