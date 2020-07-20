@@ -6,6 +6,33 @@ inputs:
   version:
     description: 'The CLI version to make available on the path.'
     required: true
+  plugins:
+    description: 'The plugins definition as json'
+    required: false
+  plugin-repo:
+    description: 'The plugin repo'
+    required: false
+  plugin-id:
+    description: 'The plugin id'
+    required: false
+  login:
+    description: 'If cf login should happen, defaults to false'
+    required: false
+  login-api:
+    description: 'Env variable for api used to do login, defaults to CF_API'
+    required: false
+  login-org:
+    description: 'Env variable for org used to do login, defaults to CF_ORG'
+    required: false
+  login-space:
+    description: 'Env variable for space used to do login, defaults to CF_SPACE'
+    required: false
+  login-username:
+    description: 'Env variable for username used to do login, defaults to CF_USERNAME'
+    required: false
+  login-password:
+    description: 'Env variable password used to do login, defaults to CF_PASSWORD'
+    required: false
 runs:
   using: 'node12'
   main: 'dist/index.js'
